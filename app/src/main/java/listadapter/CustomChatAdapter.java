@@ -2,6 +2,7 @@ package listadapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,54 +21,40 @@ import Entities.ChatListItem;
 import de.hdodenhof.circleimageview.CircleImageView;
 import su.levenetc.android.badgeview.BadgeView;
 
-public class CustomChatAdapter extends BaseAdapter{
+public class CustomChatAdapter  extends RecyclerView.Adapter<CustomChatAdapter.MyViewHolder> {
     List<ChatListItem> chatListItem;
     Context context;
- int [] imageId;
       private static LayoutInflater inflater=null;
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView headerText,contentUnder,headerRight;
+        CircleImageView prfPic;
+        BadgeView unreadChatBadge;
+        public MyViewHolder(View view) {
+            super(view);
+            headerRight=(TextView) view.findViewById(R.id.headerright);
+            contentUnder=(TextView) view.findViewById(R.id.contentunder);
+            headerText=(TextView) view.findViewById(R.id.header);
+            prfPic=(CircleImageView) view.findViewById(R.id.profile_image);
+            unreadChatBadge=(BadgeView) view.findViewById(R.id.unreadChatBadge);
+        }
+    }
     public CustomChatAdapter(Context context, List<ChatListItem> chatListItem) {
         // TODO CustomChatAdapter-generated constructor stub
         this.context=context;
         this.chatListItem=chatListItem;
-         inflater = ( LayoutInflater )context.
-                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-    @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return chatListItem.size();
+
     }
 
     @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
+    public CustomChatAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.chat_list_item, parent, false);
+
+        return new MyViewHolder(itemView);    }
 
     @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
-
-    public class Holder
-    {
-
-        TextView headerText,contentUnder,headerRight;
-        CircleImageView prfPic;
-        BadgeView unreadChatBadge;
-    }
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        Holder holder=new Holder();
-        View rowView;       
-             rowView = inflater.inflate(R.layout.chat_list_item, null);
-        holder.headerRight=(TextView) rowView.findViewById(R.id.headerright);
-        holder.contentUnder=(TextView) rowView.findViewById(R.id.contentunder);
-        holder.headerText=(TextView) rowView.findViewById(R.id.header);
-        holder.prfPic=(CircleImageView) rowView.findViewById(R.id.profile_image);
-        holder.unreadChatBadge=(BadgeView) rowView.findViewById(R.id.unreadChatBadge);
+    public void onBindViewHolder(CustomChatAdapter.MyViewHolder holder, int position) {
         holder.headerText.setText(chatListItem.get(position).chatName);
         holder.headerRight.setText(chatListItem.get(position).lastsendTimeText);
         holder.contentUnder.setText(chatListItem.get(position).lastChatMessage);
@@ -76,11 +63,16 @@ public class CustomChatAdapter extends BaseAdapter{
         {
 
             holder.unreadChatBadge.setValue(chatListItem.get(position).unReadChatCount);
-                holder.unreadChatBadge.setVisibility(View.VISIBLE);
+            holder.unreadChatBadge.setVisibility(View.VISIBLE);
             holder.headerRight.setTextColor(ContextCompat.getColor(context, R.color.greenUNREAD));
         }
-
-        return rowView;
     }
 
-} 
+    @Override
+    public int getItemCount() {
+       return  chatListItem.size();
+    }
+
+
+    }
+

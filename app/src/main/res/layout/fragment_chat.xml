@@ -6,13 +6,12 @@
     tools:context="com.chatui.ms.chatui.MainActivity$PlaceholderFragment">
 
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/chatlistView"
-        android:choiceMode="multipleChoice"
-        android:layout_alignParentTop="true"
         android:divider="@drawable/dividerstroke"
         android:layout_alignParentLeft="true"
+        android:background="?android:attr/activatedBackgroundIndicator"
         android:layout_alignParentStart="true" />
 </RelativeLayout>
