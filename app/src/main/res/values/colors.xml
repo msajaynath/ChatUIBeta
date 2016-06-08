@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#8c0d38</color>
     <color name="greenUNREAD">#00D55B</color>
     <color name="headerChatMain">#4A4A4A</color>
     <color name="contentChatMain">#757575</color>

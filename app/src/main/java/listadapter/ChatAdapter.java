@@ -15,6 +15,7 @@ import com.chatui.ms.chatui.R;
 
 import java.util.List;
 
+import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
 import utilities.ChatMessage;
 
 public class ChatAdapter extends BaseAdapter {
@@ -83,7 +84,7 @@ public class ChatAdapter extends BaseAdapter {
 
     private void setAlignment(ViewHolder holder, boolean isMe) {
         if (!isMe) {
-            holder.contentWithBG.setBackgroundResource(R.drawable.in_message_bg);
+            holder.contentWithBG.setBackgroundResource(R.drawable.chat_blue);
 
             LinearLayout.LayoutParams layoutParams =
             	(LinearLayout.LayoutParams) holder.contentWithBG.getLayoutParams();
@@ -127,7 +128,7 @@ public class ChatAdapter extends BaseAdapter {
 
     private ViewHolder createViewHolder(View v) {
         ViewHolder holder = new ViewHolder();
-        holder.txtMessage = (TextView) v.findViewById(R.id.txtMessage);
+        holder.txtMessage = (EmojiconTextView) v.findViewById(R.id.txtMessage);
         holder.content = (LinearLayout) v.findViewById(R.id.content);
         holder.contentWithBG = (LinearLayout) v.findViewById(R.id.contentWithBackground);
         holder.txtInfo = (TextView) v.findViewById(R.id.txtInfo);
@@ -135,7 +136,7 @@ public class ChatAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        public TextView txtMessage;
+        public EmojiconTextView txtMessage;
         public TextView txtInfo;
         public LinearLayout content;
         public LinearLayout contentWithBG;

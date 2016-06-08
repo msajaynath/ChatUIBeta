@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.chatui.ms.chatui.ChatListMainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:contentInsetLeft="0dp"
+            android:contentInsetStart="0dp"
+            android:padding="0dp"
+
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp"             >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:id="@+id/up_navigation_custom"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                   >
+            <ImageView
+                android:id="@id/up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:scaleType="center"
+                android:paddingLeft="5dp"
+                android:clickable="true"
+                android:src="?homeAsUpIndicator" />
+
+            <!-- This is a centered logo -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/pic1"
+                android:clickable="true"
+                android:layout_gravity="left|center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_alignParentStart="true"></de.hdodenhof.circleimageview.CircleImageView>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/profile_nav"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:maxLines="1"
+                    android:textSize="16dp"
+                    android:ellipsize="end"
+                    android:text="DevuDevuDevuD ev v v v v  v v v v v v  vvuDevuDevuDe vuDevu Devu De vu  "
+                    android:id="@+id/toolbar_title"
+                    android:textStyle="bold"
+android:gravity="bottom"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Subitem"
+                    android:gravity="top"
+
+                    android:id="@+id/toolbar_subtitle"
+                    android:layout_weight="2" />
+
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_chat_list_main" />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+android:textSize="30sp"        android:text="Analyst"
+        android:id="@+id/designation"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"          android:text="North"
+        android:id="@+id/zone"
+        android:layout_below="@+id/designation"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Settings"
+        android:id="@+id/settings"
+        android:layout_marginTop="31dp"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@+id/zone"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="23dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/settings"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/mutesettings"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@android:color/black"
+            android:text="Mute"
+            android:paddingLeft="50dp"
+            android:id="@+id/textView"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="4" />
+
+        <Switch
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch1"
+            android:paddingRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:checked="false" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/line"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:paddingTop="5dip"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/mutesettings"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="25dp"
+        android:background="#DDD" />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/notifysettings"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:layout_below="@+id/line"
+        android:layout_alignRight="@+id/line"
+        android:layout_alignEnd="@+id/line">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@android:color/black"            android:text="Notifications"
+            android:paddingLeft="50dp"
+            android:id="@+id/notify"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="4" />
+
+    </LinearLayout>
+    <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:paddingTop="5dip"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/notifysettings"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="25dp"
+        android:background="#DDD"
+        android:id="@+id/textView2" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/phonesettings"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@android:color/black"            android:text="My Phone"
+            android:paddingLeft="50dp"
+            android:id="@+id/phoneText"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="+91 9048000160"
+            android:id="@+id/phoneNumber"
+            android:layout_weight="1"
+            android:layout_gravity="bottom" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Participants"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/phonesettings"
+        android:layout_alignLeft="@+id/settings"
+        android:layout_alignStart="@+id/settings"
+        android:layout_marginTop="39dp" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profileRecycleView"
+        android:divider="@drawable/dividerstroke"
+        android:background="?android:attr/activatedBackgroundIndicator"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

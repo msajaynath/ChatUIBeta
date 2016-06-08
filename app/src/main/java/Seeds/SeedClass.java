@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Entities.ChatListItem;
+import Entities.ParticipantListItem;
 
 /**
  * Created by MS on 31/05/16.
@@ -13,6 +14,7 @@ import Entities.ChatListItem;
 public  class SeedClass {
 
     public  List<ChatListItem> chatListItemSeed=new ArrayList<ChatListItem>();
+    public  List<ParticipantListItem> participantListItemSeed=new ArrayList<ParticipantListItem>();
 
     public List<ChatListItem> seedChatListMain()
     {
@@ -28,5 +30,15 @@ public  class SeedClass {
         chatListItemSeed.add(new ChatListItem(R.drawable.pic9,"Exinmates of MTSS !!!!","Hi \uD83D\uDE4F how are u.","5/29/16",0));
         chatListItemSeed.add(new ChatListItem(R.drawable.pic10,"I am back for another day \uD83D\uDE46","Hi \uD83D\uDE4F how are u.","5/29/16",0));
         return chatListItemSeed;
+    }
+
+    public List<ParticipantListItem> seedParticipantListMain()
+    {
+        participantListItemSeed.add(new ParticipantListItem(R.drawable.pic1,"Funlife Returns: \uD83D\uDE01\uD83D\uDE01","Hoping the life of ..."));
+        participantListItemSeed.add(new ParticipantListItem(R.drawable.pic2,"AmalRaj kr","Hi \uD83D\uDE4F how are u."));
+        participantListItemSeed.add(new ParticipantListItem(R.drawable.pic3,"Bibin C \uD83D\uDE2B\uD83D\uDE2B","Please forward this message "));
+        participantListItemSeed.add(new ParticipantListItem(R.drawable.pic4,"Nijin Jain","Please stop messaging me"));
+        participantListItemSeed.add(new ParticipantListItem(R.drawable.pic5,"Devika \uD83D\uDE4E\uD83D\uDE4E","Hope is like light..."));
+           return participantListItemSeed;
     }
 }

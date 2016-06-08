@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -12,7 +14,8 @@
         android:layout_height="50dp"
         android:src="@drawable/pic1"
         android:layout_marginLeft="15dp"
-        android:clickable="false"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
         android:layout_marginTop="15dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -26,7 +29,7 @@
         android:clickable="false"
         android:ellipsize="end"
         android:textSize="18dp"
-        emojicon:emojiconSize="28sp"
+        emojicon:emojiconSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/headerChatMain"
         android:layout_alignTop="@+id/profile_image"
@@ -43,40 +46,13 @@
 
         android:text="Medium Text"
         android:textColor="@color/contentChatMain"
-        android:ellipsize="marquee"
-
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
         android:id="@+id/contentunder"
         android:layout_alignBottom="@+id/profile_image"
         android:layout_alignLeft="@+id/header"
         android:layout_alignStart="@+id/header" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/headerright"
-        android:text="tet"
-
-        android:clickable="false"
-
-        android:textColor="@color/timeChatMain"
-        android:layout_marginRight="5dp"
-        android:layout_alignBottom="@+id/header"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-    <su.levenetc.android.badgeview.BadgeView
-        android:id="@+id/unreadChatBadge"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:badgeText="1"
-        android:layout_marginRight="5dp"
-        android:clickable="false"
-
-        app:badgeBackgroundColor="@android:color/holo_green_light"
-        android:layout_below="@+id/headerright"
-        android:layout_alignParentRight="true"
-
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

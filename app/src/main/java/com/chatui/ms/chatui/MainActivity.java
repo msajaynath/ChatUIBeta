@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
          toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -69,14 +71,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
 
     }
 
@@ -148,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             chatListview.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), chatListview, new ClickListener() {
                 @Override
                 public void onClick(View view, int position) {
-                    getActivity().startActivity(new Intent(getActivity(),ChatListActivity.class));
+                    getActivity().startActivity(new Intent(getActivity(),ChatListMainActivity.class));
 
                     // Toast.makeText(getActivity().getApplicationContext(), " is selected!", Toast.LENGTH_SHORT).show();
                 }
