@@ -55,19 +55,19 @@ protected void onCreate(Bundle savedInstanceState) {
         participantsList.setLayoutManager(mLinearLayoutManager);
         participantsList.setAdapter(new CustomParticipantAdapter(getApplicationContext(), new SeedClass().seedParticipantListMain()));
         participantsList.addItemDecoration(new SimpleDividerItemDecoration(getApplicationContext()));
-        participantsList.addOnItemTouchListener(new MainActivity.RecyclerTouchListener(getApplicationContext(), participantsList, new MainActivity.ClickListener() {
-        @Override
-        public void onClick(View view, int position) {
-           // getActivity().startActivity(new Intent(getActivity(),ChatListMainActivity.class));
-
-            // Toast.makeText(getActivity().getApplicationContext(), " is selected!", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onLongClick(View view, int position) {
-
-        }
-    }));
+//        participantsList.addOnItemTouchListener(new MainActivity.RecyclerTouchListener(getApplicationContext(), participantsList, new MainActivity.ClickListener() {
+//        @Override
+//        public void onClick(View view, int position) {
+//           // getActivity().startActivity(new Intent(getActivity(),ChatListMainActivity.class));
+//
+//            // Toast.makeText(getActivity().getApplicationContext(), " is selected!", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        @Override
+//        public void onLongClick(View view, int position) {
+//
+//        }
+//    }));
     }
 
     @Override

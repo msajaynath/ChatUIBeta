@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -9,32 +10,35 @@
         android:layout_alignParentRight="true"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="30sp"
-            android:layout_gravity="right"
-            android:textSize="12sp"
-            android:textColor="@android:color/darker_gray" />
+
 
         <LinearLayout
             android:id="@+id/contentWithBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:background="@drawable/in_message_bg"
+            android:background="@drawable/blue_chat"
             android:paddingLeft="10dp"
             android:paddingBottom="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:baselineAligned="false">
 
             <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
                 android:id="@+id/txtMessage"
-                emojicon:emojiconSize="25sp"
-                android:textSize="20sp"
+                emojicon:emojiconSize="17sp"
+                android:textSize="17sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                />
+            <TextView
+                android:id="@+id/txtInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textSize="8sp"
+                android:textColor="@color/timetextcolor"
+                tools:text="9:30 pm" />
 
         </LinearLayout>
 

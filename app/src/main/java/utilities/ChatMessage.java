@@ -6,6 +6,7 @@ public class ChatMessage {
     private String message;
     private Long userId;
     private String dateTime;
+    public boolean sameSender=false;
 
     public long getId() {
         return id;

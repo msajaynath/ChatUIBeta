@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_profile_image_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context="com.chatui.ms.chatui.ProfileImageDetailActivity">
+
+    <ImageView
+        android:src="@drawable/pic12"
+        android:layout_width="388dp"
+        android:layout_height="191dp"
+        tools:layout_editor_absoluteX="9dp"
+        android:id="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/activity_profile_image_detail"
+        android:layout_marginTop="112dp" />
+</android.support.constraint.ConstraintLayout>

@@ -11,7 +11,22 @@
         android:layout_height="wrap_content"
         android:id="@+id/chatlistView"
         android:divider="@drawable/dividerstroke"
-        android:layout_alignParentLeft="true"
         android:background="?android:attr/activatedBackgroundIndicator"
+        android:layout_below="@+id/emptyListView"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="@string/EmptyListMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/emptyListView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:visibility="gone"
+        android:paddingTop="10dp"
+        android:textStyle="italic"
+        android:textColor="@android:color/darker_gray"
+/>
 </RelativeLayout>
