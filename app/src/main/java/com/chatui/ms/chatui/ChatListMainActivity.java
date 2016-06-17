@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -74,9 +78,9 @@ public class ChatListMainActivity extends AppCompatActivity {
 
         // Get the ActionBar here to configure the way it behaves.
         //ab.setHomeAsUpIndicator(R.drawable.ic_menu); // set a custom icon for the default home button
-        mRevealView = (LinearLayout) findViewById(R.id.reveal_items);
-        mRevealView.setVisibility(View.GONE);
-        hidden = true;
+//        mRevealView = (LinearLayout) findViewById(R.id.reveal_items);
+//        mRevealView.setVisibility(View.GONE);
+//        hidden = true;
 
         rv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,12 +170,12 @@ public class ChatListMainActivity extends AppCompatActivity {
 //        new MenuInflater(this).inflate(R.menu.menu_chat_main, menu);
 //        super.onCreateOptionsMenu(menu);
 //    }
-private void hideRevealView() {
-    if (mRevealView.getVisibility() == View.VISIBLE) {
-        mRevealView.setVisibility(View.GONE);
-        hidden = true;
-    }
-}
+//private void hideRevealView() {
+//    if (mRevealView.getVisibility() == View.VISIBLE) {
+//        mRevealView.setVisibility(View.GONE);
+//        hidden = true;
+//    }
+//}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         new MenuInflater(this).inflate(R.menu.menu_chat_main, menu);
@@ -189,108 +193,29 @@ private void hideRevealView() {
         switch (item.getItemId()) {
 
             case R.id.attach:
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                LayoutInflater inflater = getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.ripple_attach_menu, null);
 
-                int cx = (mRevealView.getLeft() + mRevealView.getRight());
-                int cy = mRevealView.getTop();
-                int radius = Math.max(mRevealView.getWidth(), mRevealView.getHeight());
+                dialogBuilder.setView(dialogView);
 
-                //Below Android LOLIPOP Version
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    SupportAnimator animator =
-                            ViewAnimationUtils.createCircularReveal(mRevealView, cx, cy, 0, radius);
-                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
-                    animator.setDuration(700);
+                AlertDialog b = dialogBuilder.create();
+//                Window window = b.getWindow();
+//                window.setGravity(Gravity.TOP);
+//
+//                window.setLayout(RecyclerView.LayoutParams.FILL_PARENT, RecyclerView.LayoutParams.FILL_PARENT);
 
-                    SupportAnimator animator_reverse = animator.reverse();
+                b.show();
 
-                    if (hidden) {
-                        mRevealView.setVisibility(View.VISIBLE);
-                        animator.start();
-                        hidden = false;
-                    } else {
-                        animator_reverse.addListener(new SupportAnimator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart() {
 
-                            }
-
-                            @Override
-                            public void onAnimationEnd() {
-                                mRevealView.setVisibility(View.INVISIBLE);
-                                hidden = true;
-
-                            }
-
-                            @Override
-                            public void onAnimationCancel() {
-
-                            }
-
-                            @Override
-                            public void onAnimationRepeat() {
-
-                            }
-                        });
-                        animator_reverse.start();
-                    }
-                }
-                // Android LOLIPOP And ABOVE Version
-                else {
-                    if (hidden) {
-                        Animator anim = android.view.ViewAnimationUtils.
-                                createCircularReveal(mRevealView, cx, cy, 0, radius);
-                        mRevealView.setVisibility(View.VISIBLE);
-                        anim.start();
-                        hidden = false;
-                    } else {
-                        Animator anim = android.view.ViewAnimationUtils.
-                                createCircularReveal(mRevealView, cx, cy, radius, 0);
-                        anim.addListener(new Animator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart(Animator animation) {
-
-                            }
-
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                              //  super.onAnimationEnd(animation);
-
-                                mRevealView.setVisibility(View.INVISIBLE);
-                                hidden = true;
-                            }
-
-                            @Override
-                            public void onAnimationCancel(Animator animation) {
-
-                            }
-
-                            @Override
-                            public void onAnimationRepeat(Animator animation) {
-
-                            }
-                        });
-//                        anim.addListener(new AnimatorListenerAdapter() {
-//                            @Override
-//                            public void onAnimationEnd(Animator animation) {
-//                                mRevealView.setVisibility(View.INVISIBLE);
-//                                hidden = true;
-//                            }
-//                        });
-                        anim.start();
-                    }
-                }
                 return true;
 
         }
         return true;
 
     }
-    @Override
-    public void onPanelClosed(int featureId, Menu menu) {
-        super.onPanelClosed(featureId, menu);
-        mRevealView.setVisibility(View.GONE);
-        hidden = true;
-    }
+
+
 
             private void scroll() {
         messagesContainer.scrollToPosition(adapter.getItemCount()-1);
