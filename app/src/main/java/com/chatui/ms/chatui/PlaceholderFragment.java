@@ -124,7 +124,7 @@ public  class PlaceholderFragment extends Fragment {
             });
             checkAdapterIsEmpty();
         }
-
+    AlertDialog b;
     private void LoadProfileImageDialog(ChatListItem item) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -137,13 +137,14 @@ public  class PlaceholderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().startActivity(new Intent(getActivity(), ProfileImageDetailActivity.class));
+                b.hide();
 
             }
         });
         profilePic.setImageResource(item.profilePic);
         dialogBuilder.setView(dialogView);
 
-        AlertDialog b = dialogBuilder.create();
+         b = dialogBuilder.create();
         b.show();
 
     }

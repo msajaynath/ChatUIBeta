@@ -35,5 +35,7 @@ dependencies {
     compile 'com.github.traex.rippleeffect:library:1.3'
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha3'
+    compile 'com.github.ParkSangGwon:TedPicker:v1.0.10'
+    compile 'com.nbsp:library:1.09'
     testCompile 'junit:junit:4.12'
 }

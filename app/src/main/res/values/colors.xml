@@ -9,5 +9,6 @@
     <color name="timeChatMain">#9B9B9B</color>
     <color name="timetextcolor">#292929</color>
     <color name="black">#000</color>
+    <color name="materialBlue">#03A9F4</color>
 
 </resources>

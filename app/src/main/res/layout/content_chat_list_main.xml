@@ -41,9 +41,11 @@
             android:id="@+id/emojiEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            emojicon:emojiconSize="28sp"
+            emojicon:emojiconSize="22sp"
             android:inputType="textMultiLine"
             android:ems="10"
+            android:maxLines="5"
+            android:scrollbars="vertical"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:layout_marginRight="5dp"/>

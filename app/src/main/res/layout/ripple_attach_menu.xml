@@ -12,50 +12,54 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/materialBlue"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:text="Attach"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/textView4" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="3dp">
 
-        <!--Gallery Icon -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/gallery_img_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/gallery_menu" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Gallery" />
-        </LinearLayout>
-
         <!--Photo Icon -->
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:id="@+id/attachImage">
 
             <ImageButton
                 android:id="@+id/photo_img_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:clickable="false"
                 android:background="@drawable/menu_camera" />
 
             <TextView
+                android:clickable="false"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Camera" />
+                android:text="Image" />
         </LinearLayout>
 
         <!--Video Icon -->
@@ -64,18 +68,23 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:id="@+id/attachContact"
+            android:background="?attr/selectableItemBackground"
             android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/video_img_btn"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="50dp"                android:clickable="false"
+
                 android:background="@drawable/menu_contact" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="4dp"                android:clickable="false"
+
                 android:text="Contact" />
         </LinearLayout>
         <LinearLayout
@@ -83,18 +92,23 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:clickable="true"
+            android:id="@+id/attachDocs"
+            android:background="?attr/selectableItemBackground"
             android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/fileimg_btn"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="50dp"                android:clickable="false"
+
                 android:background="@drawable/menu_document" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="4dp"                android:clickable="false"
+
                 android:text="Docs" />
             </LinearLayout>
     </LinearLayout>

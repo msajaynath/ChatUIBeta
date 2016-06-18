@@ -1,13 +1,32 @@
 package utilities;
 
+import android.graphics.Bitmap;
+
 public class ChatMessage {
     private long id;
     private boolean isMe;
     private String message;
     private Long userId;
-    private String dateTime;
-    public boolean sameSender=false;
+    private String dateTime,localfilePath;
+    private Bitmap image;
 
+    public boolean sameSender=false,imageAttached=false,fileAttached=false;
+
+    public Bitmap getImage() {
+        return image;
+    }
+    public void setImage(Bitmap image) {
+        this.image=image;
+    }
+    public String getFilePath() {
+        return localfilePath;
+    }
+    public String getFileName() {
+        return localfilePath.substring(localfilePath.lastIndexOf("/")+1);
+    }
+    public void setFilePath(String filePath) {
+        this.localfilePath=filePath;
+    }
     public long getId() {
         return id;
     }

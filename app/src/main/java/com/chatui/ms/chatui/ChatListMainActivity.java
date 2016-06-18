@@ -2,12 +2,17 @@ package com.chatui.ms.chatui;
 
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.ExpandedMenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -28,17 +33,23 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gun0912.tedpicker.ImagePickerActivity;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 import listadapter.ChatAdapter;
+import utilities.BitmapDecoder;
 import utilities.ChatMessage;
 
 public class ChatListMainActivity extends AppCompatActivity {
@@ -57,6 +68,7 @@ public class ChatListMainActivity extends AppCompatActivity {
     private LinearLayoutManager mLinearLayoutManager;
     private LinearLayout mRevealView;
     private boolean hidden;
+    private AlertDialog b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,25 +200,106 @@ public class ChatListMainActivity extends AppCompatActivity {
         mRevealView.setVisibility(View.GONE);
         hidden = true;    }
 
+    private static final int INTENT_REQUEST_GET_IMAGES = 13;
+    private void getImages() {
+
+        Intent intent  = new Intent(this, ImagePickerActivity.class);
+        startActivityForResult(intent,INTENT_REQUEST_GET_IMAGES);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resuleCode, Intent intent) {
+        super.onActivityResult(requestCode, resuleCode, intent);
+
+        if (requestCode == INTENT_REQUEST_GET_IMAGES && resuleCode == Activity.RESULT_OK ) {
+
+            ArrayList<Uri>  image_uris = intent.getParcelableArrayListExtra(ImagePickerActivity.EXTRA_IMAGE_URIS);
+            for(Uri uri:image_uris)
+            {
+                try {
+                    Uri newUri=Uri.fromFile(new File(uri.getPath()));
+
+                   // Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), newUri);
+
+                   Bitmap bitmap = BitmapDecoder.getThumbnail(newUri, getApplicationContext());
+                    ChatMessage chatMessage = new ChatMessage();
+                    chatMessage.setId(122);//dummy
+                    chatMessage.imageAttached = true;//dummy
+                    chatMessage.setImage(bitmap);
+                   // chatMessage.setMessage(uri.getPath());
+                    chatMessage.setDate((String) DateFormat.format(delegate, Calendar.getInstance().getTime()));
+                    chatMessage.setMe(true);
+                    chatMessage.sameSender = true;
+                    emojiconEditText.setText("");
+
+                    displayMessage(chatMessage);
+                }
+                catch (Exception e)
+                {
+Log.d("devuu",e.toString());
+                }
+
+            }
+
+
+           // Log.d("devuu",image_uris.get(0).getPath()) ;
+            //do something
+        }
+        else if (requestCode == 1 && resuleCode == RESULT_OK) {
+              String filePath = intent.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setId(122);//dummy
+            chatMessage.fileAttached = true;//dummy
+            chatMessage.setFilePath(filePath);
+            // chatMessage.setMessage(uri.getPath());
+            chatMessage.setDate((String) DateFormat.format(delegate, Calendar.getInstance().getTime()));
+            chatMessage.setMe(true);
+            chatMessage.sameSender = true;
+            emojiconEditText.setText("");
+
+            displayMessage(chatMessage);
+            // Do anything with file
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
             case R.id.attach:
+
+              //  getImages();
+
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater inflater = getLayoutInflater();
                 final View dialogView = inflater.inflate(R.layout.ripple_attach_menu, null);
-
+                
                 dialogBuilder.setView(dialogView);
 
-                AlertDialog b = dialogBuilder.create();
-//                Window window = b.getWindow();
-//                window.setGravity(Gravity.TOP);
-//
-//                window.setLayout(RecyclerView.LayoutParams.FILL_PARENT, RecyclerView.LayoutParams.FILL_PARENT);
+                 b = dialogBuilder.create();
 
                 b.show();
+                dialogView.findViewById(R.id.attachImage).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getImages();
+                        b.cancel();
+                    }
+                });
 
+                dialogView.findViewById(R.id.attachDocs).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new MaterialFilePicker()
+                                .withActivity(ChatListMainActivity.this)
+                                .withRequestCode(1)
+                                .withFilter(Pattern.compile(".*\\.txt$|.*\\.pdf|.*\\.docx")) // Filtering files and directories by file name using regexp
+                                .withFilterDirectories(false) // Set directories filterable (false by default)
+                                .withHiddenFiles(true) // Show hidden files and folders
+                                .start();
+                        b.cancel();
+                    }
+                });
 
                 return true;
 

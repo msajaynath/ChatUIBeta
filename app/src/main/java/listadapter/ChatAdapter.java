@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +31,8 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.MyViewHolder>
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
     public EmojiconTextView txtMessage;
-    public TextView txtInfo;
+    public TextView txtInfo,attachedFileName;
+    public ImageView attachedImage,attachedFile;
     public LinearLayout content;
     public LinearLayout contentWithBG;
     public MyViewHolder(View view) {
@@ -39,6 +41,9 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         content = (LinearLayout) view.findViewById(R.id.content);
         contentWithBG = (LinearLayout) view.findViewById(R.id.contentWithBackground);
         txtInfo = (TextView) view.findViewById(R.id.txtInfo);
+        attachedFileName = (TextView) view.findViewById(R.id.attachedFileName);
+        attachedImage = (ImageView) view.findViewById(R.id.attachedImage);
+        attachedFile = (ImageView) view.findViewById(R.id.attachedFile);
 
     }
 
@@ -68,7 +73,27 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         boolean myMsg = chatMessage.getIsme() ;//Just a dummy check
         //to simulate whether it me or other sender
         setAlignment(holder, myMsg,chatMessage.sameSender);
-        holder.txtMessage.setText(chatMessage.getMessage());
+        if(chatMessage.imageAttached)
+        {
+            holder.txtMessage.setVisibility(View.GONE);
+            holder.attachedImage.setImageBitmap(chatMessage.getImage());
+            holder.attachedImage.setVisibility(View.VISIBLE);
+        }
+        else if(chatMessage.fileAttached) {
+
+            holder.txtMessage.setVisibility(View.GONE);
+            holder.attachedFile.setImageResource(R.drawable.file_attached);
+            holder.attachedFileName.setText(chatMessage.getFileName());
+            holder.attachedFile.setVisibility(View.VISIBLE);
+            holder.attachedFileName.setVisibility(View.VISIBLE);
+        }
+
+        else
+        {
+            holder.txtMessage.setText(chatMessage.getMessage());
+
+        }
+
         holder.txtInfo.setText(chatMessage.getDate());
     }
 

@@ -47,6 +47,7 @@ public class CustomChatAdapter  extends RecyclerView.Adapter<CustomChatAdapter.M
         TextView headerText,contentUnder,headerRight;
         CircleImageView prfPic;
         BadgeView unreadChatBadge;
+
         public MyViewHolder(View view) {
             super(view);
             headerRight=(TextView) view.findViewById(R.id.headerright);

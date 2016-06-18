@@ -25,12 +25,33 @@
 
             <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
                 android:id="@+id/txtMessage"
-                emojicon:emojiconSize="17sp"
+                emojicon:emojiconSize="22sp"
                 android:textSize="17sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                />
+
+            <ImageView
+                android:id="@+id/attachedImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:id="@+id/attachedFile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:visibility="gone"
+                />
+            <TextView
+                android:id="@+id/attachedFileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textColor="@android:color/holo_orange_dark"
+                />
             <TextView
                 android:id="@+id/txtInfo"
                 android:layout_width="wrap_content"
