@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
+    android:background="@drawable/chat_list_background"
     android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/content"
@@ -27,6 +28,7 @@
                 android:id="@+id/txtMessage"
                 emojicon:emojiconSize="22sp"
                 android:textSize="17sp"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
@@ -37,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                android:clickable="true"
                 />
 
             <ImageView

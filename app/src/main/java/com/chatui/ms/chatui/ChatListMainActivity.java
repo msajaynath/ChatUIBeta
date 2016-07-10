@@ -1,56 +1,50 @@
 package com.chatui.ms.chatui;
 
 
-import android.animation.Animator;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.ExpandedMenuView;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gun0912.tedpicker.ImagePickerActivity;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
+import Global.GlobalChats;
 import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
-import io.codetail.animation.SupportAnimator;
-import io.codetail.animation.ViewAnimationUtils;
 import listadapter.ChatAdapter;
 import utilities.BitmapDecoder;
 import utilities.ChatMessage;
+import utilities.OnItemChatClickListener;
 
 public class ChatListMainActivity extends AppCompatActivity {
     String delegate = "hh:mm aaa";
@@ -69,15 +63,18 @@ public class ChatListMainActivity extends AppCompatActivity {
     private LinearLayout mRevealView;
     private boolean hidden;
     private AlertDialog b;
-
+    private ActionMode mActionMode;
+    private boolean paste=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list_main);
-        
+
         Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
-//        ImageView view = (ImageView)findViewById(android.R.id.home);
-//        view.setPadding(10, 0, 0, 0);
+        Intent intent=getIntent();
+        if(intent.hasExtra("pasteChat"))
+        paste=true;
+
         title =(TextView)tb.findViewById(R.id.toolbar_title);
         sub_title =(TextView)tb.findViewById(R.id.toolbar_subtitle);
         title.setText("Funlife Returns new group \uD83D\uDE01 \uD83D\uDE01");
@@ -108,10 +105,10 @@ public class ChatListMainActivity extends AppCompatActivity {
         });
         mLinearLayoutManager = new LinearLayoutManager(getApplicationContext());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mLinearLayoutManager.setStackFromEnd(true);
         //   chatListview.setHasFixedSize(true);
         messagesContainer = (RecyclerView) findViewById(R.id.messagesContainer);
         messagesContainer.setLayoutManager(mLinearLayoutManager);
-
         rootView = findViewById(R.id.root_view);
         emojiButton = (ImageView) findViewById(R.id.kayboardswitch);
         submitButton = (ImageView) findViewById(R.id.sendButton);
@@ -130,20 +127,6 @@ public class ChatListMainActivity extends AppCompatActivity {
             }
         });
 
-//        emojiconEditText.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                emojIcon.ShowEmojIcon();
-//
-//            }
-//        });
-//        emojiconEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                emojIcon.ShowEmojIcon();
-//
-//            }
-//        });
 
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +150,19 @@ public class ChatListMainActivity extends AppCompatActivity {
             }
         });
         loadDummyHistory();
+
+        if(paste)
+            appendCopiedChats();
+    }
+
+    private void appendCopiedChats() {
+        List <ChatMessage> chatsSave=((GlobalChats)getApplication()).getSavedChats();
+        for(ChatMessage chat:chatsSave)
+        {
+            chat.setMe(true);
+            displayMessage(chat);
+        }
+
     }
 
 
@@ -177,17 +173,6 @@ public class ChatListMainActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        new MenuInflater(this).inflate(R.menu.menu_chat_main, menu);
-//        super.onCreateOptionsMenu(menu);
-//    }
-//private void hideRevealView() {
-//    if (mRevealView.getVisibility() == View.VISIBLE) {
-//        mRevealView.setVisibility(View.GONE);
-//        hidden = true;
-//    }
-//}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         new MenuInflater(this).inflate(R.menu.menu_chat_main, menu);
@@ -315,6 +300,7 @@ Log.d("devuu",e.toString());
 
 //        messagesContainer.setSelection(messagesContainer.getCount() - 1);
     }
+
     private void loadDummyHistory(){
 
         chatHistory = new ArrayList<ChatMessage>();
@@ -327,12 +313,126 @@ Log.d("devuu",e.toString());
         chatHistory.add(msg);
 
 
-        adapter = new ChatAdapter(ChatListMainActivity.this, new ArrayList<ChatMessage>());
-        messagesContainer.setAdapter(adapter);
+        adapter = new ChatAdapter(ChatListMainActivity.this, new ArrayList<ChatMessage>(), new OnItemChatClickListener() {
+            @Override
+            public void onLongClick(ChatMessage item,int position) {
+                mActionMode = ChatListMainActivity.this.startSupportActionMode(new ActionBarCallBacks());
+                myToggleSelection(position);
+            }
+
+            @Override
+            public void onClick(ChatMessage item,int position) {
+             if(mActionMode!=null)
+             {
+                 myToggleSelection(position);
+
+             }
+            }
+
+            @Override
+            public void onImageClick(ChatMessage item,int position) {
+                if(mActionMode!=null)
+                {
+                    myToggleSelection(position);
+
+                }
+                else {
+                    //Toast.makeText(getApplicationContext(),"devu i heree",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(ChatListMainActivity.this, ProfileImageDetailActivity.class);
+                    Bitmap b = item.getImage(); // your bitmap
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    b.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                    intent.putExtra("Image", bs.toByteArray());
+                    //  intent.putExtra("Image",item.getImage());
+                    startActivity(intent);
+                }
+            }
+        });
+                messagesContainer.setAdapter(adapter);
 
         for(int i=0; i<chatHistory.size(); i++) {
             ChatMessage message = chatHistory.get(i);
             displayMessage(message);
         }
     }
+
+    private void myToggleSelection(int idx) {
+        adapter.toggleSelection(idx);
+//        String title = getString(
+//                R.string.selected_count,
+//                adapter.getSelectedItemCount());
+//        actionMode.setTitle(title);
+    }
+
+    class ActionBarCallBacks implements  android.support.v7.view.ActionMode.Callback {
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            // TODO Auto-generated method stub
+            switch (item.getItemId())
+            {
+
+                case R.id.item_delete:
+                    List<Integer> selectedItemPositions =
+                            adapter.getSelectedItems();
+                    for (int i = selectedItemPositions.size()-1; i >= 0; i--) {
+                    adapter.remove(selectedItemPositions.get(i));
+                }
+
+                    mode.finish();
+                break;
+                case R.id.item_copy:
+                    List <ChatMessage> chats=adapter.getAllChats();
+                    String copyText="";
+                    for(ChatMessage chat:chats)
+                    {
+                        copyText+=chat.getMessage()+"\n";
+                    }
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Copy", copyText);
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(ChatListMainActivity.this,"Copied to clipboard!",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.item_forward:
+                    List <ChatMessage> chatsSave=adapter.getAllChats();
+                    GlobalChats globalChats =  (GlobalChats) getApplication();
+                    globalChats.setSavedChats(chatsSave);
+                    Intent intent =new Intent(ChatListMainActivity.this, MainActivity.class);
+                    intent.putExtra("pasteChat",true);
+                    startActivity(intent);
+                    Toast.makeText(ChatListMainActivity.this,"Please select  groups/chat for forwarding!",Toast.LENGTH_SHORT).show();
+                    mActionMode.finish();
+                    break;
+
+                default:
+                    return false;
+            }
+            return true;
+
+        }
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // TODO Auto-generated method stub
+            mode.getMenuInflater().inflate(R.menu.context_chat_menu, menu);
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            mActionMode = null;
+            adapter.clearSelections();
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            // TODO Auto-generated method stub
+
+            return false;
+        }
+
+
+    }
+
+
 }

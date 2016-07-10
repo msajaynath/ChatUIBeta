@@ -13,7 +13,7 @@
         android:layout_width="388dp"
         android:layout_height="191dp"
         tools:layout_editor_absoluteX="9dp"
-        android:id="@+id/imageView2"
+        android:id="@+id/imageZoom"
         app:layout_constraintTop_toTopOf="@+id/activity_profile_image_detail"
         android:layout_marginTop="112dp" />
 </android.support.constraint.ConstraintLayout>

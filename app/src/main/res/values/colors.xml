@@ -10,5 +10,6 @@
     <color name="timetextcolor">#292929</color>
     <color name="black">#000</color>
     <color name="materialBlue">#03A9F4</color>
+    <color name="grey_tranparent">#2003A9FF</color>
 
 </resources>

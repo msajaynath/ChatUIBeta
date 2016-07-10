@@ -2,8 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chatui.ms.chatui">
 
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
+        android:name="Global.GlobalChats"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -27,24 +36,25 @@
         <activity
             android:name=".ChatListMainActivity"
             android:label="@string/title_activity_chat_list_main"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfileScreenMainActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProfileImageDetailActivity"></activity>
-
-        <activity android:name="com.gun0912.tedpicker.ImagePickerActivity"
+        <activity android:name=".ProfileImageDetailActivity" />
+        <activity
+            android:name="com.gun0912.tedpicker.ImagePickerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeImagePicker"
-            />
-
-
+            android:theme="@style/AppThemeImagePicker" />
+        <activity
+            android:name=".NewGroupAddActivity"
+            android:label="@string/title_activity_new_group_add"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewGroupAddMemberActivity"
+            android:label="@string/title_activity_new_group_add_member"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

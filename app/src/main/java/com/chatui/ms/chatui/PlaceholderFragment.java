@@ -1,6 +1,5 @@
 package com.chatui.ms.chatui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,19 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MotionEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -46,7 +40,7 @@ public  class PlaceholderFragment extends Fragment {
         private List<ChatListItem> chatMainList;
         private CustomChatAdapter chatAdapter;
         private TextView emptychatListview;
-
+        static   boolean paste;
         public PlaceholderFragment() {
         }
 
@@ -54,7 +48,8 @@ public  class PlaceholderFragment extends Fragment {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public  PlaceholderFragment newInstance(int sectionNumber,boolean paste) {
+            this.paste=paste;
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -88,33 +83,24 @@ public  class PlaceholderFragment extends Fragment {
             chatAdapter=new CustomChatAdapter(getActivity().getApplicationContext(), chatMainList, new OnItemClickListener() {
                 @Override
                 public void onProfileItemClick(ChatListItem item) {
-                    Toast.makeText(getContext(),item.chatName,Toast.LENGTH_LONG).show();
                     LoadProfileImageDialog(item);
                 }
 
                 @Override
                 public void onListItemClick(ChatListItem item) {
-                   // Toast.makeText(getContext(),"devuu   herer",Toast.LENGTH_LONG).show();
-                   getActivity().startActivity(new Intent(getActivity(), ChatListMainActivity.class));
+                    Intent intent =new Intent(getActivity(), ChatListMainActivity.class);
+                    if(paste)
+                        intent.putExtra("pasteChat",true);
+                   getActivity().startActivity(intent);
+                    if(paste)
+                        getActivity().finish();
+                    paste=false;
 
                 }
             });
             chatListview.setAdapter(chatAdapter);
             chatListview.addItemDecoration(new SimpleDividerItemDecoration(getActivity().getApplicationContext()));
-//            chatListview.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), chatListview, new ClickListener() {
-//                @Override
-//                public void onClick(View view, int position) {
-//                    getActivity().startActivity(new Intent(getActivity(), ChatListMainActivity.class));
-//                    Log.d("View ID:",view.toString()+"");
-//
-//                    // Toast.makeText(getActivity().getApplicationContext(), " is selected!", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onLongClick(View view, int position) {
-//
-//                }
-//            }));
+
             chatAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onChanged() {
@@ -201,12 +187,23 @@ public  class PlaceholderFragment extends Fragment {
                     return true;
                 }
             };
-            searchView.setOnQueryTextListener(textChangeListener);
+          searchView.setOnQueryTextListener(textChangeListener);
 
 
            // return true;
         }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.newGroup:
+                startActivity(new Intent(getActivity(),NewGroupAddActivity.class));
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public interface ClickListener {
         void onClick(View view, int position);
@@ -214,46 +211,4 @@ public  class PlaceholderFragment extends Fragment {
         void onLongClick(View view, int position);
     }
 
-    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private GestureDetector gestureDetector;
-        private ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildPosition(child));
-            }
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
-    }
     }

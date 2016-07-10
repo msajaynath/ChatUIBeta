@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_new_group_add_member"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.chatui.ms.chatui.NewGroupAddMemberActivity"
+    tools:showIn="@layout/activity_new_group_add_member">
+
+    <TextView
+        android:text="Add participants"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        tools:layout_editor_absoluteX="21dp"
+        tools:layout_editor_absoluteY="20dp"
+        android:id="@+id/textView6"
+        android:layout_marginTop="24dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:textStyle="normal|bold" />
+
+    <utilities.CustomAutoCompleteTextView
+        android:id="@+id/autocomplete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:hint="@string/str_hnt_autocomplete"
+        android:completionThreshold="1"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/textView6"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/contactAdded"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/autocomplete"
+        android:layout_alignLeft="@+id/autocomplete"
+        android:layout_alignStart="@+id/autocomplete"
+        android:layout_marginTop="14dp" />
+</LinearLayout>
